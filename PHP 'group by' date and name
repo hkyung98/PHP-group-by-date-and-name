@@ -1,0 +1,36 @@
+How could I get It grouped by date and name like this:
+
+  name     | date      |   count   
+---------------------------------------
+  a        | 2019-10-16|    2
+  a        | 2019-10-15|    2
+  b        | 2019-10-16|    2
+this is the code i tried:
+
+<?php
+$db = new mysqli('localhost', 'root' , '' , 'test');
+if (mysqli_connect_errno()) {
+    echo '<p>Error</p>';
+}
+
+$query  = "SELECT `name`, `timestamp`, Count(*)
+FROM register
+GROUP BY `name`, `timestamp`";
+
+$stmt = $db->prepare($query);
+$stmt->execute();
+$stmt->bind_result($name, $timestamp);
+echo '<table><tr>
+<th width="15%">name</th>
+<th width="15%">date</th>
+<th width="15%">Count</th>
+</tr>';
+
+while ($stmt->fetch()) {
+    echo '<tr>';
+    echo '<td width="15%">.$name.</td>';
+    echo '<td width="15%">.$timestamp.</td>';
+    echo '<td width="15%">.$Count.</td>';
+    echo '</tr>';
+}
+?>
